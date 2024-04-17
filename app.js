@@ -47,7 +47,7 @@ const auth = require('./middleware/auth');
 app.use(bodyParser.json());
 
 app.get('/', auth);
-app.use('/api/auth/', cors(), userRoutes);
+app.use('/api/auth/', userRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // app.get('/', (req, res) => {
