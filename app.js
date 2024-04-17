@@ -1,14 +1,20 @@
 const express = require('express');
 const cors = require('cors');
+const app = express();
+//CORS Config
+const corsOpts = {
+  origin: '*',
 
+  methods: ['GET', 'POST'],
+
+  allowedHeaders: ['Content-Type'],
+};
+app.use(cors(corsOpts));
 const bodyParser = require('body-parser');
 
 // impoter variable d'environement
 require('dotenv').config();
 // console.log(process.env);
-
-const userRoutes = require('./routes/user');
-const path = require('path');
 
 // Configuration for mongoDB
 const mongoose = require('mongoose');
@@ -19,19 +25,12 @@ mongoose
   })
   .then(() => console.log('Connexion à mongoDB réussie !'))
   .catch((error) => console.log({ error }));
-const app = express();
+
+const userRoutes = require('./routes/user');
+const path = require('path');
 
 const auth = require('./middleware/auth');
 
-//CORS Config
-const corsOpts = {
-  origin: '*',
-
-  methods: ['GET', 'POST'],
-
-  allowedHeaders: ['Content-Type'],
-};
-app.use(cors(corsOpts));
 // app.use((req, res, next) => {
 //   res.setHeader('Access-Control-Allow-Origin', '*');
 //   res.setHeader(
@@ -48,7 +47,7 @@ app.use(cors(corsOpts));
 app.use(bodyParser.json());
 
 app.get('/', auth);
-app.use('/api/auth/', userRoutes);
+app.use('/api/auth/', cors(), userRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // app.get('/', (req, res) => {
