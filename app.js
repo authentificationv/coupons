@@ -2,15 +2,15 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 //CORS Config
-const corsOpts = {
-  origin: 'https://aslyonline.com/',
-  optionsSuccessStatus: 200,
+// const corsOpts = {
+//   origin: 'https://aslyonline.com/',
+//   optionsSuccessStatus: 200,
 
-  methods: ['GET', 'POST'],
+//   methods: ['GET', 'POST'],
 
-  allowedHeaders: ['Content-Type'],
-};
-app.use(cors(corsOpts));
+//   allowedHeaders: ['Content-Type'],
+// };
+app.use(cors);
 
 const bodyParser = require('body-parser');
 
