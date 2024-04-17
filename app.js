@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 //CORS Config
 const corsOpts = {
-  origin: '*',
+  origin: 'https://aslyonline.com',
 
   methods: ['GET', 'POST'],
 
