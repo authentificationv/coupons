@@ -3,13 +3,15 @@ const cors = require('cors');
 const app = express();
 //CORS Config
 const corsOpts = {
-  origin: 'https://aslyonline.com',
+  origin: 'https://aslyonline.com/',
+  optionsSuccessStatus: 200,
 
   methods: ['GET', 'POST'],
 
   allowedHeaders: ['Content-Type'],
 };
 app.use(cors(corsOpts));
+
 const bodyParser = require('body-parser');
 
 // impoter variable d'environement
