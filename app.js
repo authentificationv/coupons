@@ -24,7 +24,14 @@ const app = express();
 const auth = require('./middleware/auth');
 
 //CORS Config
-app.use(cors());
+const corsOpts = {
+  origin: '*',
+
+  methods: ['GET', 'POST'],
+
+  allowedHeaders: ['Content-Type'],
+};
+app.use(cors(corsOpts));
 // app.use((req, res, next) => {
 //   res.setHeader('Access-Control-Allow-Origin', '*');
 //   res.setHeader(
