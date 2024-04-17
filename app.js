@@ -10,7 +10,7 @@ const app = express();
 
 //   allowedHeaders: ['Content-Type'],
 // };
-app.use(cors);
+app.use(cors());
 
 const bodyParser = require('body-parser');
 
