@@ -41,9 +41,9 @@ const auth = require('./middleware/auth');
 app.use(bodyParser.json());
 
 // Route pour renvoyer "hello"
-// app.get('/hello', (req, res) => {
-//   res.send('hello');
-// });
+app.get('/hello', (req, res) => {
+  res.send('hello');
+});
 
 app.get('/', auth);
 app.use('/api/auth/', userRoutes);
