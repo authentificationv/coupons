@@ -31,7 +31,7 @@ router.put('/profile', auth, userCtrl.updateUserProfile);
 router.get('/users', auth, admin, userCtrl.getUsers);
 router.post('/user/:id', auth, admin, userCtrl.creditUserAccount); //crdit user account
 // router.delete('/:userId', auth, admin, userCtrl.deleteUser);
-router.delete('/:userId', userCtrl.deleteUser);
+router.delete('/:userId', auth, admin, userCtrl.deleteUser);
 // to delete all users
 router.delete('/', auth, admin, userCtrl.deleteAllUsers);
 

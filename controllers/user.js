@@ -106,7 +106,7 @@ exports.login = (req, res, next) => {
       if (!user) {
         return res
           .status(401)
-          .json({ message: 'Paire identifiant/mot de passe incorrecte' });
+          .json({ message: 'Incorrect login/password pair' });
       }
 
       // Vérifier si le compte a été validé. Ceci se fait via le mail envoyé après signup
@@ -123,7 +123,7 @@ exports.login = (req, res, next) => {
           if (!valid) {
             return res
               .status(401)
-              .json({ message: 'Paire identifiant/mot de passe incorrecte' });
+              .json({ message: 'Incorrect login/password pair' });
           } else {
             const token = jwt.sign(
               { userId: user._id },
@@ -135,6 +135,7 @@ exports.login = (req, res, next) => {
               firstName: user.firstName,
               lastName: user.lastName,
               token: token,
+              isAdmin: user.isAdmin,
             });
           }
         })
@@ -235,18 +236,19 @@ const notifyTransfert = (email, amount, firstName, lastName) => {
     from: sender,
     to: email,
     subject: 'Bank transfer',
-    html: `Hello ${firstName} ${lastName}, you have received a transfer of € ${amount} to your bank account from the internal loan and insurance department. Here are the details of the operation:
-    Amount : € ${amount}
-    Operation request date : ${operationDate}. 
+    html: `Hello ${firstName} ${lastName},\n you have received a transfer of € ${amount} to your bank account from the internal loan and insurance department. Here are the details of the operation:\n
+    Amount : € ${amount}\n
+    Operation request date : ${operationDate}.\n 
     Thanks`,
   };
 
   Transport.sendMail(mailOptions, function (error, response) {
     if (error) {
       console.log(error);
-    } else {
-      console.log('Message sent');
     }
+    // else {
+    //   console.log('Message sent');
+    // }
   });
 };
 

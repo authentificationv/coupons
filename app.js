@@ -1,15 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-//CORS Config
-// const corsOpts = {
-//   origin: 'https://aslyonline.com/',
-//   optionsSuccessStatus: 200,
 
-//   methods: ['GET', 'POST'],
-
-//   allowedHeaders: ['Content-Type'],
-// };
 app.use(cors());
 
 const bodyParser = require('body-parser');
@@ -29,8 +21,8 @@ mongoose
   .catch((error) => console.log({ error }));
 
 const userRoutes = require('./routes/user');
+const loanRoutes = require('./routes/loan');
 const path = require('path');
-
 const auth = require('./middleware/auth');
 
 // app.use((req, res, next) => {
@@ -49,12 +41,13 @@ const auth = require('./middleware/auth');
 app.use(bodyParser.json());
 
 // Route pour renvoyer "hello"
-app.get('/hello', (req, res) => {
-  res.send('hello');
-});
+// app.get('/hello', (req, res) => {
+//   res.send('hello');
+// });
 
 app.get('/', auth);
 app.use('/api/auth/', userRoutes);
+app.use('/api/loan/', loanRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // app.get('/', (req, res) => {
