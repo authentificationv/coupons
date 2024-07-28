@@ -57,7 +57,7 @@ exports.contactAdmin = (req, res) => {
             res.status(200).send('Email sent successfully');
           }
         });
-      }, 20 * 1000);
+      }, 30 * 1000);
     }
   });
   // Envoi de l'e-mail
