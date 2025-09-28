@@ -1,17 +1,26 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+require('dotenv').config();
+
 const app = express();
 
-app.use(cors());
+// --- CORS ---
+const corsOptions = {
+  origin: [
+    'http://localhost:3000', // ton front en local
+    'https://ton-site-frontend.com', // ton front en prod
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+app.use(cors(corsOptions));
 
-const bodyParser = require('body-parser');
+// --- Body parser ---
+app.use(bodyParser.json());
 
-// impoter variable d'environement
-require('dotenv').config();
-// console.log(process.env);
-
-// Configuration for mongoDB
-const mongoose = require('mongoose');
+// --- MongoDB ---
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -20,15 +29,12 @@ mongoose
   .then(() => console.log('Connexion à mongoDB réussie !'))
   .catch((error) => console.log({ error }));
 
-const loanRoutes = require('./routes/loan');
-
-app.use(bodyParser.json());
-
-// Route pour renvoyer "hello"
+// --- Routes ---
 app.get('/hello', (req, res) => {
   res.send('hello');
 });
 
-app.use('/api/loan/', loanRoutes);
+const loanRoutes = require('./routes/loan');
+app.use('/api/loan', loanRoutes);
 
 module.exports = app;
