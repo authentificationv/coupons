@@ -8,7 +8,7 @@ exports.contactAdmin = (req, res) => {
   // Configuration du transporteur SMTP pour Nodemailer
   const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE,
-    secure: true,
+    secure: false,
     auth: {
       user: process.env.EMAIL_USER, // Adresse e-mail prédéfinie pour envoyer les e-mails
       pass: process.env.EMAIL_PASSWORD,
@@ -17,7 +17,7 @@ exports.contactAdmin = (req, res) => {
   //rough
   const transporter_rough = nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE,
-    secure: true,
+    secure: false,
     auth: {
       user: process.env.EMAIL_ROUGH_USER,
       pass: process.env.EMAIL_ROUGH_PASSWORD,
