@@ -10,12 +10,13 @@ const app = express();
 const corsOptions = {
   origin: [
     'http://localhost:3000', // ton front en local
-    'https://ton-site-frontend.com', // ton front en prod
+    'https://authentification-coupon.onrender.com', // ton front en prod
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // --- Body parser ---
 app.use(bodyParser.json());
@@ -34,7 +35,7 @@ app.get('/hello', (req, res) => {
   res.send('hello');
 });
 
-const loanRoutes = require('./routes/loan');
-app.use('/api/loan', loanRoutes);
+const baseRoutes = require('./routes/ticket');
+app.use('/api/loan', baseRoutes);
 
 module.exports = app;

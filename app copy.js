@@ -20,7 +20,7 @@ mongoose
   .then(() => console.log('Connexion à mongoDB réussie !'))
   .catch((error) => console.log({ error }));
 
-const loanRoutes = require('./routes/loan');
+const loanRoutes = require('./routes/ticket');
 
 app.use(bodyParser.json());
 
